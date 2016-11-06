@@ -28,7 +28,7 @@ def main():
         print("The jumble word is: {}".format(jumble))
 
         #Getting player's guess
-        guess = input("Enter your guess: ")
+        guess = input("Enter your guess: ").lower()
 
         #congratulate the player
         if(guess==theWord):
