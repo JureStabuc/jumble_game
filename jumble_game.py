@@ -1,5 +1,6 @@
 import random
 from amazement import *
+import shelve
 
 #Welcome the player
 print("""
@@ -11,7 +12,23 @@ def wordlist(file):
     with open(file) as afile:
         global the_list
         the_list = [word.strip(",") for line in afile for word in line.split()]
-    print(the_list)
+
+def menu():
+    print("1--Play the game")
+    print("2--Browse a word set")
+    print("3--Add a new word set")
+    print("4--Delete a word set")
+    print("5--My sorted scores")
+    print("6--Exit")
+    pick = int(input("Pick one:"))
+
+    if pick == 1:
+        main()
+    if pick == 2:
+        for i in the_list:
+            print(i)
+    if pick == 3:
+        user_list()
 
 def main():
     score = 0
@@ -37,7 +54,9 @@ def main():
             print ("Sorry, wrong guess.")
     print("You got {} out of 10".format(score))
 
+
 #filename = "words/amazement_words.txt"
 
 wordlist(filename)
-main()
+menu()
+#main()
