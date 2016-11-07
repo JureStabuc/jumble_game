@@ -1,13 +1,11 @@
 import random
+from amazement import *
 
 #Welcome the player
 print("""
     Welcome to Word Jumble.
         Unscramble the letters to make a word.
 """)
-print("Select an option:")
-print("""
-1-Play the game""")
 
 def wordlist(file):
     with open(file) as afile:
@@ -40,5 +38,6 @@ def main():
     print("You got {} out of 10".format(score))
 
 #filename = "words/amazement_words.txt"
-#wordlist(filename)
-#main()
+
+wordlist(filename)
+main()
