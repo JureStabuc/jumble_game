@@ -28,7 +28,6 @@ def menu():
         for i in the_list:
             print(i)
     if pick == 3:
-        user_list()
 
 def main():
     score = 0
