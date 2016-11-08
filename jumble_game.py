@@ -23,13 +23,17 @@ def menu():
     pick = int(input("Pick one:"))
 
     if pick == 1:
-        main()
-    if pick == 2:
+        game()
+    elif pick == 2:
         for i in the_list:
-            print(i)
-    if pick == 3:
+            print(i, end="  ")
+    elif pick == 3:
+        global name
+        name = input("Name: ")+".dat"
+        filename = input("File name:")
+        add_list(filename)
 
-def main():
+def game():
     score = 0
     for i in range(4):
         word = random.choice(the_list)
@@ -53,9 +57,22 @@ def main():
             print ("Sorry, wrong guess.")
     print("You got {} out of 10".format(score))
 
+def add_list(file):
+    with open(file) as afile:
+        the_list = [word.strip(",") for line in afile for word in line.split()]
+        print(the_list)
+    print ("Shelving Lists ...")
+    shelf = shelve.open(name)
+    shelf[name]=the_list
+    shelf.sync()
+    shelf.close()
+    print("Success.")
+    print("Retrieving animal list from shelf")
+    shelf = shelve.open(name)
+    print("Your words: {}".format(shelf[name]))
+    shelf.close()
 
 #filename = "words/amazement_words.txt"
-
 wordlist(filename)
 menu()
-#main()
+#game()
