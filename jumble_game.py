@@ -67,7 +67,7 @@ def add_list(file):
     shelf.sync()
     shelf.close()
     print("Success.")
-    print("Retrieving animal list from shelf")
+    print("Retrieving word list from shelf")
     shelf = shelve.open(name)
     print("Your words: {}".format(shelf[name]))
     shelf.close()
