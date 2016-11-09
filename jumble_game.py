@@ -29,7 +29,7 @@ def menu():
             print(i, end="  ")
     elif pick == 3:
         global name
-        name = input("Name: ")+".dat"
+        name = input("Name: ")
         filename = input("File name:")
         add_list(filename)
 
@@ -62,13 +62,13 @@ def add_list(file):
         the_list = [word.strip(",") for line in afile for word in line.split()]
         print(the_list)
     print ("Shelving Lists ...")
-    shelf = shelve.open(name)
+    shelf = shelve.open("wordlists.dat")
     shelf[name]=the_list
     shelf.sync()
     shelf.close()
     print("Success.")
     print("Retrieving word list from shelf")
-    shelf = shelve.open(name)
+    shelf = shelve.open("wordlists.dat")
     print("Your words: {}".format(shelf[name]))
     shelf.close()
 
