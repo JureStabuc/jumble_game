@@ -1,1 +1,0 @@
-python, ruby, django, rails

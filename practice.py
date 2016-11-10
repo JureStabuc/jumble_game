@@ -1,10 +1,7 @@
-shelf=shelve.open(#filename)
-for key in shelf.keys():
-    print(key, ": \n", shelf[key], "\n \n")
-
-
-delete_key=input("Do you want to delete")
-if delete_key==key in shelf.keys():
-    del shelf[key]
-    for key in shelf.keys():
-        print(key, ": \n"m shelf[key], "\n \n")
+import shelve
+shelf=shelve.open("wordlists.dat")
+listname = list(shelf.keys())
+for i in listname:
+    print("{}--{}".format(listname.index(i),i))
+word_set = int(input("Pick one:"))
+print(listname[word_set])

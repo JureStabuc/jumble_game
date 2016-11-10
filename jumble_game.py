@@ -1,5 +1,4 @@
 import random
-#from amazement import *
 import shelve
 
 # Welcome the player
@@ -7,11 +6,6 @@ print("""
     Welcome to Word Jumble.
         Unscramble the letters to make a word.
 """)
-
-def wordlist(file):
-    with open(file) as afile:
-        global the_list
-        the_list = [word.strip(",") for line in afile for word in line.split()]
 
 def menu():
     print("1--Play the game")
@@ -23,13 +17,6 @@ def menu():
     pick = int(input("Pick one:"))
 
     if pick == 1:
-        shelf = shelve.open("wordlists.dat")
-        for key in shelf.keys():
-            print(key)
-            # print(shelf[key])
-        word_set = input("Pick one:")
-        global wordlist
-        wordlist = shelf[word_set]
         game()
 
     elif pick == 2:
@@ -50,15 +37,24 @@ def menu():
 def browse():
     print("Retrieving word list from shelf")
     shelf = shelve.open("wordlists.dat")
-    for key in shelf.keys():
-        print(key)
-    name = input("Which one?")
-    print("Your words: {}".format(shelf[name]))
+    listname = list(shelf.keys())
+    for i in listname:
+        print("{}--{}".format(listname.index(i)+1,i))
+    choice = int(input("Pick one:"))
+    word_set=(listname[choice-1])
+    print("Your words: {}".format(shelf[word_set]))
     shelf.close()
     return menu()
 
 def game():
-    global score
+    shelf=shelve.open("wordlists.dat")
+    listname = list(shelf.keys())
+    for i in listname:
+        print("{}--{}".format(listname.index(i)+1,i))
+    choice = int(input("Pick one:"))
+    word_set=(listname[choice-1])
+    global wordlist
+    wordlist = shelf[word_set]
     score = 0
     for i in range(4):
         word = random.choice(wordlist)
@@ -91,39 +87,33 @@ def score():
     shelf = shelve.open("score.dat")
     for key in shelf.keys():
         print(shelf[key])
-    #print(shelf["score"])
     shelf.close()
+    return menu()
 
 def add_list(file):
     with open(file) as afile:
         the_list = [word.strip(",") for line in afile for word in line.split()]
-        print(the_list)
     print("Shelving Lists ...")
     shelf = shelve.open("wordlists.dat")
     shelf[name] = the_list
     shelf.sync()
     shelf.close()
     print("Success.")
-    print("Retrieving word list from shelf")
-    shelf = shelve.open("wordlists.dat")
-    print("Your words: {}".format(shelf[name]))
-    shelf.close()
     return menu()
 
 def delete():
-    shelf = shelve.open("wordlists.dat")
-    for key in shelf.keys():
-        print(key)
-    delete_key = input("Do you want to delete:")
-    if delete_key == key in shelf.keys():
-        del shelf[key]
-        shelf.sync()
-        shelf.close()
-    else:
-        print("Please type in the correct file")
-        return delete()
+    shelf=shelve.open("wordlists.dat")
+    listname = list(shelf.keys())
+    for i in listname:
+        print("{}--{}".format(listname.index(i)+1,i))
+    choice = int(input("Pick one:"))
+    word_set=(listname[choice-1])
+    #if word_set == i in listname.keys():
+    del shelf[word_set]
+    shelf.sync()
+    shelf.close()
+    #else:
+        #print("ERROR")
+        #return delete()
     return menu()
-#filename = "words/amazement_words.txt"
-# wordlist(filename)
 menu()
-# game()
