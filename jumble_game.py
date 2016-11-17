@@ -1,13 +1,13 @@
 import random
 import shelve
 import time
+import add_list
 
 # Welcome the player
 print("""
     Welcome to Word Jumble.
         Unscramble the letters to make a word.
 """)
-
 
 #Main menu
 def menu():
@@ -27,10 +27,8 @@ def menu():
         browse()
 
     elif pick == 3:
-        global name
-        name = input("Name: ")
-        filename = input("File name:")
-        add_list(filename)
+        add_list.list_import()
+        return menu()
 
     elif pick == 4:
         delete()
@@ -38,6 +36,12 @@ def menu():
     elif pick == 5:
         score()
 
+    elif pick == 6:
+        exit()
+        
+    else:
+        print("\n Please select one of the options \n")
+        return menu()
 #Browse a wordlist function
 def browse():
     print("Retrieving word list from shelf")
@@ -51,13 +55,12 @@ def browse():
     choice = int(input("Please select: "))
     #Chosing the correct key from user input according to the key's index
     word_set=(listname[choice-1])
-    print("Your words:")
+    print("Your words: \n")
     for i in shelf[word_set]:
-        print("{}".format(i))
+        print(i,end=" ")
+    print("\n")
     shelf.close()
     return menu()
-
-    #the_list = [word.strip(",") for line in afile for word in line.split()]
 
 def game():
     shelf=shelve.open("wordlists.dat")
@@ -116,17 +119,6 @@ def score():
             print(myformat.format(key, val))
     shelf.close
     return menu()
-#Adding a wordset
-def add_list(file):
-    with open(file) as afile:
-        the_list = [word.strip(",") for line in afile for word in line.split()]
-    print("Shelving Lists ...")
-    shelf = shelve.open("wordlists.dat")
-    shelf[name] = the_list
-    shelf.sync()
-    shelf.close()
-    print("Success.")
-    return menu()
 
 def delete():
     shelf=shelve.open("wordlists.dat")
@@ -135,12 +127,8 @@ def delete():
         print("{}--{}".format(listname.index(i)+1,i))
     choice = int(input("Please select: "))
     word_set=(listname[choice-1])
-    #if word_set == i in listname.keys():
     del shelf[word_set]
     shelf.sync()
     shelf.close()
-    #else:
-        #print("ERROR")
-        #return delete()
     return menu()
 menu()
